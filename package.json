@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "@babel/core": "^7.15.8",
+        "china-area-data": "^5.0.1",
         "webpack": "^5.88.2",
         "webpack-cli": "^5.1.4"
     }
