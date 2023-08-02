@@ -12019,6 +12019,9 @@ body {
   color: inherit;
 }
 
+.products-index-page .pagination {
+  margin-right: 5px;
+}
 .products-index-page .products-list {
   padding: 0 15px;
 }
