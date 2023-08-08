@@ -29,6 +29,9 @@ return [
     'env' => env('APP_ENV', 'production'),
     'order_ttl' => 1800,
 
+
+    'ngrok_url' => env('NGROK_URL'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
