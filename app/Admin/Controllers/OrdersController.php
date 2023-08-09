@@ -11,6 +11,7 @@ use Encore\Admin\Layout\Content;
 use Illuminate\Http\Request;
 use App\Exceptions\InvalidRequestException;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use App\Http\Requests\Admin\HandleRefundRequest;
 
 
 class OrdersController extends AdminController
@@ -162,20 +163,29 @@ class OrdersController extends AdminController
         return redirect()->back();
     }
 
-    public function received(Order $order, Request $request)
+    public function handleRefund(Order $order, HandleRefundRequest $request)
     {
-        // 校验权限
-        $this->authorize('own', $order);
-
-        // 判断订单的发货状态是否为已发货
-        if ($order->ship_status !== Order::SHIP_STATUS_DELIVERED) {
-            throw new InvalidRequestException('发货状态不正确');
+        // 判断订单状态是否正确
+        if ($order->refund_status !== Order::REFUND_STATUS_APPLIED) {
+            throw new InvalidRequestException('订单状态不正确');
+        }
+        // 是否同意退款
+        if ($request->input('agree')) {
+            // 同意退款的逻辑这里先留空
+            // todo
+        } else {
+            // 将拒绝退款理由放到订单的 extra 字段中
+            $extra = $order->extra ?: [];
+            $extra['refund_disagree_reason'] = $request->input('reason');
+            // 将订单的退款状态改为未退款
+            $order->update([
+                'refund_status' => Order::REFUND_STATUS_PENDING,
+                'extra'         => $extra,
+            ]);
         }
 
-        // 更新发货状态为已收到
-        $order->update(['ship_status' => Order::SHIP_STATUS_RECEIVED]);
-
-        // 返回原页面
-        return redirect()->back();
+        return $order;
     }
+
+
 }
