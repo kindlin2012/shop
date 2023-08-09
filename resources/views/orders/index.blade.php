@@ -47,7 +47,7 @@
                     @if($index === 0)
                       <td rowspan="{{ count($order->items) }}" class="text-center total-amount">￥{{ $order->total_amount }}</td>
                       <td rowspan="{{ count($order->items) }}" class="text-center">
-                        @if($order->paid_at)
+                        {{-- @if($order->paid_at)
                           @if($order->refund_status === \App\Models\Order::REFUND_STATUS_PENDING)
                             已支付
                           @else
@@ -59,10 +59,18 @@
                           未支付<br>
                           请于 {{ $order->created_at->addSeconds(config('app.order_ttl'))->format('H:i') }} 前完成支付<br>
                           否则订单将自动关闭
+                        @endif --}}
+                        <a class="btn btn-primary btn-sm" href="{{ route('orders.show', ['order' => $order->id]) }}">查看订单</a>
+                        <!-- 评价入口开始 -->
+                        @if($order->paid_at)
+                        <a class="btn btn-success btn-sm" href="{{ route('orders.review.show', ['order' => $order->id]) }}">
+                        {{ $order->reviewed ? '查看评价' : '评价' }}
+                        </a>
                         @endif
+                        <!-- 评价入口结束 -->
                       </td>
                       {{-- <td rowspan="{{ count($order->items) }}" class="text-center"><a class="btn btn-primary btn-sm" href="">查看订单</a></td> --}}
-                      <a class="btn btn-primary btn-sm" href="{{ route('orders.show', ['order' => $order->id]) }}">查看订单</a>
+                      {{-- <a class="btn btn-primary btn-sm" href="{{ route('orders.show', ['order' => $order->id]) }}">查看订单</a> --}}
                     @endif
                   </tr>
                 @endforeach
