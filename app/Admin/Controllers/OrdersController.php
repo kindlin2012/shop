@@ -236,6 +236,7 @@ class OrdersController extends AdminController
                 throw new InternalException('未知订单支付方式：'.$order->payment_method);
                 break;
         }
+    }
 
 
 }
