@@ -9,6 +9,11 @@ return [
         'log'            => [
             'file' => storage_path('logs/alipay.log'),
         ],
+         // 添加以下代码
+         'http' => [
+            'timeout' => 5.0,
+            'connect_timeout' => 5.0
+        ]
     ],
 
     'wechat' => [

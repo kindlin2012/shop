@@ -37,7 +37,9 @@ class PaymentController extends Controller
     //  // 服务器端回调
     //  public function alipayNotify()
     //  {
+
     //      $data = app('alipay')->verify();
+    //     //  dd($data->all());
     //      \Log::debug('Alipay notify', $data->all());
     //  }
 
@@ -67,6 +69,7 @@ class PaymentController extends Controller
          if (!$order) {
              return 'fail';
          }
+
          // 如果这笔订单的状态已经是已支付
          if ($order->paid_at) {
              // 返回数据给支付宝
