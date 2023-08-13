@@ -142,8 +142,9 @@ class OrdersController extends Controller
     }
 
     public function sendReview(Order $order, SendReviewRequest $request)
+    // public function sendReview(Order $order, Request $request)
     {
-        // dd($order,$request);
+        // dd($request,$order);
         // 校验权限
         $this->authorize('own', $order);
         if (!$order->paid_at) {
@@ -154,6 +155,7 @@ class OrdersController extends Controller
             throw new InvalidRequestException('该订单已评价，不可重复提交');
         }
         $reviews = $request->input('reviews');
+        // dd($reviews);
 
         if (!empty($reviews)) {
 

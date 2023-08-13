@@ -50,7 +50,6 @@
               @endif
             </td>
             <td>
-              {{-- {{ dd($order) }} --}}
               @if($order->reviewed)
                 {{ $item->review }}
               @else
