@@ -96,9 +96,17 @@ class Product extends Model
         });
         // 只取出需要的商品属性字段
         $arr['properties'] = $this->properties->map(function (ProductProperty $property) {
-            return Arr::only($property->toArray(), ['name', 'value']);
+            // return Arr::only($property->toArray(), ['name', 'value']);
+            return array_merge(Arr::only($property->toArray(), ['name', 'value']), [
+                'search_value' => $property->name.':'.$property->value,
+            ]);
         });
 
         return $arr;
+    }
+
+    public function scopeByIds($query, $ids)
+    {
+        return $query->whereIn('id', $ids)->orderByRaw(sprintf("FIND_IN_SET(id, '%s')", join(',', $ids)));
     }
 }
