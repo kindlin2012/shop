@@ -24,7 +24,7 @@ use App\Models\Product;
 Auth::routes(['verify' => true]);
 Route::get('products/favorites', 'ProductsController@favorites')->name('products.favorites');
 Route::post('payment/alipay/notify', 'PaymentController@alipayNotify')->name('payment.alipay.notify');
-Route::post('seckill_orders', 'OrdersController@seckill')->name('seckill_orders.store');
+Route::post('seckill_orders', 'OrdersController@seckill')->name('seckill_orders.store')->middleware('random_drop:80');
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // auth 中间件代表需要登录，verified中间件代表需要经过邮箱验证
